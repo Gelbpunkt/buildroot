@@ -1,0 +1,34 @@
+From 160cbf27c853c52e90c2c9597623249a8ae33507 Mon Sep 17 00:00:00 2001
+From: Jens Reidel <adrian@travitia.xyz>
+Date: Thu, 11 Jul 2024 05:48:43 +0200
+Subject: [PATCH] Fix MIPS compile
+
+---
+ vendor/github.com/moby/buildkit/snapshot/diffapply_unix.go | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/vendor/github.com/moby/buildkit/snapshot/diffapply_unix.go b/vendor/github.com/moby/buildkit/snapshot/diffapply_unix.go
+index f5a6d82..6c756f8 100644
+--- a/vendor/github.com/moby/buildkit/snapshot/diffapply_unix.go
++++ b/vendor/github.com/moby/buildkit/snapshot/diffapply_unix.go
+@@ -128,7 +128,7 @@ func statInode(stat *syscall.Stat_t) inode {
+ 	}
+ 	return inode{
+ 		ino: stat.Ino,
+-		dev: stat.Dev,
++		dev: uint64(stat.Dev),
+ 	}
+ }
+ 
+@@ -297,7 +297,7 @@ func (a *applier) applyDelete(ca *changeApply) (bool, error) {
+ 			if ca.srcStat == nil {
+ 				ca.srcStat = &syscall.Stat_t{
+ 					Mode: syscall.S_IFCHR,
+-					Rdev: unix.Mkdev(0, 0),
++					Rdev: 0,
+ 				}
+ 				ca.srcPath = ""
+ 			}
+-- 
+2.45.2
+
