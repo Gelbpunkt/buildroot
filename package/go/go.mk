@@ -55,6 +55,10 @@ else ifeq ($(BR2_powerpc64),y)
 GO_GOARCH = ppc64
 else ifeq ($(BR2_powerpc64le),y)
 GO_GOARCH = ppc64le
+else ifeq ($(BR2_mips),y)
+GO_GOARCH = mips
+else ifeq ($(BR2_mipsel),y)
+GO_GOARCH = mipsle
 else ifeq ($(BR2_mips64),y)
 GO_GOARCH = mips64
 else ifeq ($(BR2_mips64el),y)
